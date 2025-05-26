@@ -9,8 +9,7 @@ interface CommandEvent
 {
     /**
      * Returns the command
-     *
      * @return object
      */
-    public function getCommand();
+    public function getCommand(): object;
 }

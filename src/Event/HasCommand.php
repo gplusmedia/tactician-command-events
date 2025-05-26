@@ -7,17 +7,13 @@ namespace League\Tactician\CommandEvents\Event;
  */
 trait HasCommand
 {
-    /**
-     * @var object
-     */
-    protected $command;
+    protected object $command;
 
     /**
      * Returns the command
-     *
      * @return object
      */
-    public function getCommand()
+    public function getCommand(): object
     {
         return $this->command;
     }

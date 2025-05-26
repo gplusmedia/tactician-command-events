@@ -2,22 +2,21 @@
 
 namespace League\Tactician\CommandEvents\Event;
 
-use League\Event\Event;
+use League\Event\HasEventName;
 
 /**
  * Emitted when a command is received
  */
-final class CommandReceived extends Event implements CommandEvent
+final class CommandReceived implements CommandEvent, HasEventName
 {
     use HasCommand;
 
-    /**
-     * @param object $command
-     */
-    public function __construct($command)
+    public function __construct(protected object $command)
     {
-        $this->command = $command;
+    }
 
-        parent::__construct('command.received');
+    public function eventName(): string
+    {
+        return 'command.received';
     }
 }

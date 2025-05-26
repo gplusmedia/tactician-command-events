@@ -2,7 +2,7 @@
 
 namespace spec\League\Tactician\CommandEvents\Event;
 
-use League\Event\EventInterface;
+use League\Event\HasEventName;
 use League\Tactician\CommandEvents\Event\CommandEvent;
 use League\Tactician\CommandEvents\Event\CommandHandled;
 use spec\League\Tactician\CommandEvents\Command;
@@ -15,28 +15,28 @@ final class CommandHandledSpec extends ObjectBehavior
         $this->beConstructedWith($command);
     }
 
-    function it_is_initializable()
+    function it_is_initializable(): void
     {
         $this->shouldHaveType(CommandHandled::class);
     }
 
-    function it_is_a_command_event()
+    function it_is_a_command_event(): void
     {
         $this->shouldImplement(CommandEvent::class);
     }
 
-    function it_is_an_event()
+    function it_is_an_event(): void
     {
-        $this->shouldImplement(EventInterface::class);
+        $this->shouldImplement(HasEventName::class);
     }
 
-    function it_has_a_command(Command $command)
+    function it_has_a_command(Command $command): void
     {
         $this->getCommand()->shouldReturn($command);
     }
 
-    function it_has_a_name()
+    function it_has_a_name(): void
     {
-        $this->getName()->shouldReturn('command.handled');
+        $this->eventName()->shouldReturn('command.handled');
     }
 }

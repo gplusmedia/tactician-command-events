@@ -2,45 +2,32 @@
 
 namespace League\Tactician\CommandEvents\Event;
 
-use League\Event\Event;
+use Exception;
+use League\Event\HasEventName;
 
 /**
  * Emitted when a command is failed
  */
-final class CommandFailed extends Event implements CommandEvent
+final class CommandFailed implements CommandEvent, HasEventName
 {
     use HasCommand;
 
     /**
-     * @var \Exception
-     */
-    protected $exception;
-
-    /**
      * Checks whether exception is caught
-     *
-     * @var bool
      */
-    protected $exceptionCaught = false;
+    private bool $exceptionCaught = false;
 
-    /**
-     * @param object     $command
-     * @param \Exception $exception
-     */
-    public function __construct($command, \Exception $exception)
-    {
-        $this->command = $command;
-        $this->exception = $exception;
-
-        parent::__construct('command.failed');
+    public function __construct(
+        protected object $command,
+        private readonly Exception $exception
+    ) {
     }
 
     /**
      * Returns the exception
-     *
-     * @return \Exception
+     * @return Exception
      */
-    public function getException()
+    public function getException(): Exception
     {
         return $this->exception;
     }
@@ -48,18 +35,22 @@ final class CommandFailed extends Event implements CommandEvent
     /**
      * Indicates that exception is caught
      */
-    public function catchException()
+    public function catchException(): void
     {
         $this->exceptionCaught = true;
     }
 
     /**
      * Checks whether exception is caught
-     *
      * @return bool
      */
-    public function isExceptionCaught()
+    public function isExceptionCaught(): bool
     {
         return $this->exceptionCaught;
+    }
+
+    public function eventName(): string
+    {
+        return 'command.failed';
     }
 }
